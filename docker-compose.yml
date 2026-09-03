@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"   # HTTP interface
+      - "9000:9000"   # Native TCP interface (used by Power BI/Tableau ODBC drivers)
+    environment:
+      - CLICKHOUSE_DB=instacart
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=clickhouse123
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./data:/data   # put your extracted Instacart CSVs here on the host
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  superset:
+    image: apache/superset:latest
+    container_name: superset
+    ports:
+      - "8088:8088"
+    environment:
+      - SUPERSET_SECRET_KEY=some_random_secret_key_change_me
+    depends_on:
+      - clickhouse
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - clickhouse
+
+volumes:
+  clickhouse_data:

@@ -1,6 +1,7 @@
 # Analiza i usporedba OLAP alata
 
-Diplomski rad · [Fakultet informatike u Puli](https://fipu.unipu.hr)\
+Fakultet: [Fakultet informatike u Puli](https://fipu.unipu.hr)\
+Diplomski rad: [Diplomski rad]{https://fipu.unipu.hr/fipu/predmet/diprad_a}\
 Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)\
 Student: Thomas Siard
 

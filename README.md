@@ -1,8 +1,8 @@
 # Analiza i usporedba OLAP alata
 
-[Fakultet informatike u Puli](https://fipu.unipu.hr)\
-Kolegij: [Diplomski rad]\
-Mentor: [izv. prof. dr. sc. Goran Oreški]\
+Fakultet: [Fakultet informatike u Puli](https://fipu.unipu.hr)\
+Kolegij: [Diplomski rad](https://fipu.unipu.hr/fipu/predmet/diprad_a)\
+Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)\
 Student: Thomas Siard
 
 Diplomski rad koji analizira i uspoređuje pet OLAP (Online Analytical Processing) alata na primjeru stvarnog skupa podataka. Cilj rada je istražiti prednosti, mane i praktičnu primjenjivost svakog alata za analizu i vizualizaciju podataka.

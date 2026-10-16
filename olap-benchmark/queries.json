@@ -1,0 +1,36 @@
+{
+  "database": "instacart",
+  "queries": [
+    {"id": "Q1", "size": "mali",    "type": "filter",   "tables": "products",                                   "title": "Filtriranje (broj proizvoda u prolazu 24)",
+     "sql": "SELECT count() AS n FROM instacart.products WHERE aisle_id = 24"},
+    {"id": "Q2", "size": "mali",    "type": "spajanje", "tables": "products, departments",                      "title": "Spajanje 2 tablice + grupiranje po odjelu",
+     "sql": "SELECT d.department, count() AS n FROM instacart.products p INNER JOIN instacart.departments d ON p.department_id = d.department_id GROUP BY d.department ORDER BY n DESC"},
+    {"id": "Q3", "size": "srednji", "type": "filter",   "tables": "orders",                                     "title": "Filtriranje narudžbi (nedjelja, 9-15 h)",
+     "sql": "SELECT count() AS n FROM instacart.orders WHERE order_dow = 0 AND order_hour_of_day BETWEEN 9 AND 15"},
+    {"id": "Q4", "size": "srednji", "type": "grupiranje","tables": "orders",                                    "title": "Grupiranje po danu i satu (168 grupa)",
+     "sql": "SELECT order_dow, order_hour_of_day, count() AS n FROM instacart.orders GROUP BY order_dow, order_hour_of_day ORDER BY order_dow, order_hour_of_day"},
+    {"id": "Q5", "size": "srednji", "type": "spajanje", "tables": "order_products_train, products, aisles",      "title": "Spajanje 3 tablice + grupiranje po prolazu",
+     "sql": "SELECT a.aisle, count() AS n FROM instacart.order_products_train t INNER JOIN instacart.products p ON t.product_id = p.product_id INNER JOIN instacart.aisles a ON p.aisle_id = a.aisle_id GROUP BY a.aisle ORDER BY n DESC"},
+    {"id": "Q6", "size": "veliki",  "type": "filter",   "tables": "order_products_prior",                       "title": "Filtriranje nad 32,4 M zapisa (ponovljene kupnje)",
+     "sql": "SELECT count() AS n FROM instacart.order_products_prior WHERE reordered = 1"},
+    {"id": "Q7", "size": "veliki",  "type": "grupiranje","tables": "order_products_prior",                      "title": "Grupiranje nad 32,4 M zapisa (top 20 proizvoda)",
+     "sql": "SELECT product_id, count() AS n FROM instacart.order_products_prior GROUP BY product_id ORDER BY n DESC, product_id LIMIT 20"},
+    {"id": "Q8", "size": "veliki",  "type": "spajanje", "tables": "order_products_prior, products, departments","title": "Spajanje 3 tablice nad 32,4 M zapisa (po odjelu)",
+     "sql": "SELECT d.department, count() AS n FROM instacart.order_products_prior opp INNER JOIN instacart.products p ON opp.product_id = p.product_id INNER JOIN instacart.departments d ON p.department_id = d.department_id GROUP BY d.department ORDER BY n DESC",
+     "check": {"sum_n": 32434489}},
+    {"id": "Q9", "size": "veliki",  "type": "spajanje", "tables": "order_products_prior, orders, products, departments", "title": "Spajanje 4 tablice nad 32,4 M zapisa (odjel x dan)",
+     "sql": "SELECT d.department, o.order_dow, count() AS n FROM instacart.order_products_prior opp INNER JOIN instacart.orders o ON opp.order_id = o.order_id INNER JOIN instacart.products p ON opp.product_id = p.product_id INNER JOIN instacart.departments d ON p.department_id = d.department_id GROUP BY d.department, o.order_dow ORDER BY d.department, o.order_dow",
+     "check": {"sum_n": 32434489}}
+  ],
+  "scalability": {
+    "title": "Isti upit nad rastućim podskupom tablice order_products_prior (granica po order_id)",
+    "template": "SELECT product_id, count() AS n FROM instacart.order_products_prior {where} GROUP BY product_id ORDER BY n DESC, product_id LIMIT 20",
+    "rows_template": "SELECT count() AS n FROM instacart.order_products_prior {where}",
+    "steps": [
+      {"id": "S1", "where": "WHERE order_id <= 105000",  "approx_rows": "~1 M"},
+      {"id": "S2", "where": "WHERE order_id <= 527000",  "approx_rows": "~5 M"},
+      {"id": "S3", "where": "WHERE order_id <= 1055000", "approx_rows": "~10 M"},
+      {"id": "S4", "where": "",                          "approx_rows": "32,4 M"}
+    ]
+  }
+}

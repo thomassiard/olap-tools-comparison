@@ -1,0 +1,4 @@
+timestamp,tool,query_id,run,metric,value_ms,rows_returned,result_hash,status,notes
+2026-10-DD,tableau,Q4,1,data_ms,,,,ok,"Tableau: Help > Settings and Performance > Start Performance Recording; događaj 'Executing Query'"
+2026-10-DD,tableau,Q4,1,render_ms,,,,ok,"događaj 'Computing Layouts' (ili zbroj Computing Layouts + Rendering)"
+2026-10-DD,tableau,S4,0,data_ms,,,,error,"Tableau Public: izvor ima > 15 M redaka, učitavanje nije moguće (https://help.tableau.com/current/pro/desktop/en-us/desktop_comparison.htm)"

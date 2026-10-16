@@ -1,0 +1,13 @@
+{
+  "runs": 10,
+  "warmup": 1,
+  "clickhouse": {"url": "http://localhost:8123", "user": "default", "password": "clickhouse123"},
+  "superset":   {"url": "http://localhost:8088", "user": "admin", "password": "admin123", "database_id": 1, "schema": "instacart"},
+  "metabase":   {"url": "http://localhost:3000", "user": "tsrose01@gmail.com", "password": "UNESI_LOZINKU", "database_id": 2},
+  "browser": {
+    "headless": true,
+    "quiet_ms": 600,
+    "superset": {"data_url_contains": "/api/v1/chart/data", "targets": {"Q4": "http://localhost:8088/explore/?slice_id=ID"}},
+    "metabase": {"data_url_contains": "/query", "targets": {"Q4": "http://localhost:3000/question/ID"}}
+  }
+}

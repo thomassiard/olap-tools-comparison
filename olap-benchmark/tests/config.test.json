@@ -1,0 +1,4 @@
+{"runs": 3, "warmup": 1,
+ "clickhouse": {"url": "http://127.0.0.1:18123", "user": "default", "password": "x"},
+ "superset": {"url": "http://127.0.0.1:18088", "user": "a", "password": "b", "database_id": 1, "schema": "instacart"},
+ "metabase": {"url": "http://127.0.0.1:13000", "user": "a", "password": "b", "database_id": 2}}

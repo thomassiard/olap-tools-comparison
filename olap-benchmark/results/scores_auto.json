@@ -1,0 +1,75 @@
+{
+  "clickhouse": {
+    "k8_slope_b": 0.589,
+    "K8": 5,
+    "k8_full_dataset": true
+  },
+  "superset": {
+    "k3_geo_ratio": 3.349,
+    "k3_queries": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7",
+      "Q8",
+      "Q9"
+    ],
+    "K3": 2,
+    "k8_slope_b": 0.048,
+    "K8": 5,
+    "k8_full_dataset": true
+  },
+  "metabase": {
+    "k3_geo_ratio": 1.956,
+    "k3_queries": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7",
+      "Q8",
+      "Q9"
+    ],
+    "K3": 3,
+    "k8_slope_b": 0.066,
+    "K8": 5,
+    "k8_full_dataset": true
+  },
+  "powerbi": {
+    "k3_geo_ratio": 2.239,
+    "k3_queries": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q7",
+      "Q8",
+      "Q9"
+    ],
+    "K3": 3,
+    "k8_slope_b": 0.039,
+    "K8": 5,
+    "k8_full_dataset": true
+  },
+  "tableau": {
+    "k3_geo_ratio": 1.0,
+    "k3_queries": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5"
+    ],
+    "K3": 5,
+    "k8_slope_b": 0.332,
+    "K8": 1,
+    "k8_full_dataset": false
+  }
+}

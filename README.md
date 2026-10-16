@@ -1,8 +1,9 @@
 # Analiza i usporedba OLAP alata
 
 Diplomski rad · [Fakultet informatike u Puli](https://fipu.unipu.hr)\
-Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)
+Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)\
 Student: Thomas Siard
+
 U radu uspoređujem pet alata za analizu podataka na istom skupu podataka
 ([Instacart](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis), 32 milijuna zapisa):
 

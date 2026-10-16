@@ -1,46 +1,45 @@
 # Analiza i usporedba OLAP alata
 
-Fakultet: [Fakultet informatike u Puli](https://fipu.unipu.hr)\
-Kolegij: [Diplomski rad](https://fipu.unipu.hr/fipu/predmet/diprad_a)\
-Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)\
-Student: Thomas Siard
+Diplomski rad · [Fakultet informatike u Puli](https://fipu.unipu.hr)\
+Student: Thomas Siard · Mentor: [izv. prof. dr. sc. Goran Oreški](https://fipu.unipu.hr/fipu/en/goran.oreski)
 
-Diplomski rad koji analizira i uspoređuje pet OLAP alata nad istim skupom podataka (Instacart, 3,4 M narudžbi i 32,4 M stavki):
-**ClickHouse** (baza, osnovna linija), **Apache Superset**, **Metabase**, **Microsoft Power BI** i **Tableau Public**.
-Alati se ocjenjuju prema devet kriterija (K1-K9: povezivanje, postavljanje, brzina, vizualizacije, jednostavnost,
-licenciranje, dijeljenje, skalabilnost, dokumentacija), a brzina i skalabilnost se **mjere** nizom od 9 upita (Q1-Q9) i
-4 koraka rastućeg obujma (S1-S4), s ponovljenim pokretanjima, u svih pet alata.
+U radu uspoređujem pet alata za analizu podataka na istom skupu podataka
+([Instacart](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis), 32 milijuna zapisa):
 
-## Sažetak rezultata (medijan ukupnog vremena do prikaza, ms)
+- **ClickHouse**, baza podataka
+- **Apache Superset**
+- **Metabase**
+- **Power BI**
+- **Tableau Public**
 
-| Upit | ClickHouse | Superset | Metabase | Power BI | Tableau Public |
-|---|---|---|---|---|---|
-| Q1 mali filtar | 11 | 447 | 203 | 199 | 46 |
-| Q5 spajanje 3 tablice | 33 | 487 | 296 | 208 | 134 |
-| Q8 32,4 M, 3 tablice | 279 | 723 | 544 | 493 | n/p |
-| Q9 32,4 M, 4 tablice | 843 | 1.321 | 1.079 | 6.278 | n/p |
+Svaki alat je izvršio istih 9 upita i 4 testa skalabilnosti, a vremena su mjerena više puta.
 
-n/p = Tableau Public ne može učitati izvor veći od 15 M redaka. Svi grafikoni i tablice: `olap-benchmark/results/`.
+## Rezultati
 
-## Struktura repozitorija
+Vrijeme do prikaza grafa, medijan u milisekundama:
 
-```
-docker-compose.yml        ClickHouse, Apache Superset i Metabase u Dockeru
-data/                     SQL za izradu sheme i učitavanje CSV-ova (setup_instacart.sql), izvoz za Tableau
-olap-benchmark/           skripte za mjerenje i obradu, upiti (queries.json), sirovi rezultati i grafikoni
-powerbi/                  Power BI izvještaj korišten za mjerenje (DirectQuery, 12 stranica)
-tableau/                  Tableau Public radna knjiga korištena za mjerenje
-```
+| Upit | ClickHouse | Superset | Metabase | Power BI | Tableau |
+|---|---:|---:|---:|---:|---:|
+| Mali upit (Q1) | 11 | 447 | 203 | 199 | 46 |
+| 32 M zapisa (Q8) | 279 | 723 | 544 | 493 | – |
+| 32 M zapisa, 4 tablice (Q9) | 843 | 1.321 | 1.079 | 6.278 | – |
 
-## Ponavljanje istraživanja
+Tableau Public ne može učitati više od 15 milijuna redaka.
+Svi rezultati i grafovi su u mapi [`olap-benchmark/results`](olap-benchmark/results).
 
-1. Preuzmi skup podataka s Kaggla: https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis
-   (CSV datoteke nisu u repozitoriju jer prelaze GitHubovo ograničenje od 100 MB po datoteci) i raspakiraj ih u `data/`.
+## Sadržaj
+
+| Mapa | Što je unutra |
+|---|---|
+| `olap-benchmark/` | skripte za mjerenje, upiti i rezultati |
+| `data/` | SQL za učitavanje podataka u ClickHouse |
+| `powerbi/`, `tableau/` | datoteke korištene za mjerenje |
+| `docker-compose.yml` | pokreće ClickHouse, Superset i Metabase |
+
+## Pokretanje
+
+1. Preuzmi CSV datoteke s [Kagglea](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis) u mapu `data/`
 2. `docker compose up -d`
-3. Učitaj podatke: `docker exec -i clickhouse clickhouse-client --password clickhouse123 --multiquery < data/setup_instacart.sql`
-4. Provjera: `SELECT count() FROM instacart.order_products_prior` mora vratiti 32.434.489.
-5. Mjerenje i obrada: upute u [`olap-benchmark/README.md`](olap-benchmark/README.md).
+3. `docker exec -i clickhouse clickhouse-client --password clickhouse123 --multiquery < data/setup_instacart.sql`
 
-## Dataset
-
-🔗 [https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis)
+Upute za mjerenje: [`olap-benchmark/README.md`](olap-benchmark/README.md)

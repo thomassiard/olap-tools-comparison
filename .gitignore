@@ -1,0 +1,6 @@
+data/*.csv
+*.csv.zip
+olap-benchmark/config.json
+.venv/
+__pycache__/
+~*
